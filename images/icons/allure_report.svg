@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2018 (64-Bit) -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="67.7334mm" height="67.7334mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 5038.32 5038.32"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil6 {fill:none}
+    .fil0 {fill:whitesmoke}
+    .fil4 {fill:#3DAC47}
+    .fil3 {fill:#A7D1A3}
+    .fil5 {fill:#E0C305}
+    .fil2 {fill:#E30613}
+    .fil1 {fill:#FFDD00}
+   ]]>
+  </style>
+   <clipPath id="id0">
+    <path d="M691.15 4215.69l2871.14 0 1008.03 -1696.53 -1008.03 -1696.53 -2871.14 0 0 3393.05zm630.25 -2780.25l1892.04 0.28 643.76 1083.45 -643.76 1083.45 -1892.04 0 0 -2167.17z"/>
+   </clipPath>
+ </defs>
+ <g id="Слой_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <path class="fil0" d="M1180.86 0l2676.61 0c652.06,0 1180.86,528.8 1180.86,1180.86l0 2676.61c0,652.05 -528.8,1180.85 -1180.86,1180.85l-2676.61 0.01c-652.05,-0.01 -1180.85,-528.81 -1180.85,-1180.86l-0.01 -2676.6c0.01,-652.06 528.81,-1180.86 1180.86,-1180.86z"/>
+  <path class="fil1" d="M691.15 4215.69l2871.14 0 1008.03 -1696.53 -1008.03 -1696.53 -2871.14 0 0 3393.05zm630.25 -2780.25l1892.04 0.28 643.76 1083.45 -643.76 1083.45 -1892.04 0 0 -2167.17z"/>
+  <g style="clip-path:url(#id0)">
+   <g id="_2381520042592">
+    <rect class="fil2" x="691.15" y="822.64" width="870.73" height="1086.12"/>
+    <rect class="fil3" x="1561.88" y="660.16" width="1242" height="877.34"/>
+    <polygon class="fil4" points="2827.66,3380.63 2827.66,4215.69 3562.29,4215.69 3999.4,3480.03 3174.7,3005.64 "/>
+    <rect class="fil5" x="369.06" y="2408.45" width="1363.56" height="766.34"/>
+    <rect class="fil5" transform="matrix(0.748866 -0.423101 0.423101 0.748866 3037.26 1775.77)" width="1692.56" height="951.24"/>
+   </g>
+  </g>
+  <path class="fil6" d="M691.15 4215.69l2871.14 0 1008.03 -1696.53 -1008.03 -1696.53 -2871.14 0 0 3393.05zm630.25 -2780.25l1892.04 0.28 643.76 1083.45 -643.76 1083.45 -1892.04 0 0 -2167.17z"/>
+ </g>
+</svg>
