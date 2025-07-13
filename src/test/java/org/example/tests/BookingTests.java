@@ -1,7 +1,6 @@
 package org.example.tests;
 
 import io.qameta.allure.Description;
-import org.example.data.BookingData;
 import org.example.models.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -9,12 +8,12 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static java.net.HttpURLConnection.*;
+import static org.example.data.BookingConstants.*;
 
 public class BookingTests extends BaseTest {
-    private final BookingData bookingData = new BookingData();
 
-    @Description("Create a new booking")
     @Test
+    @Description("Create a new booking")
     public void testCreateBooking() {
         Booking body = bookingData.createRandomBooking();
 
@@ -26,8 +25,8 @@ public class BookingTests extends BaseTest {
         Assert.assertEquals(response.getBooking().getFirstName(), body.getFirstName());
     }
 
-    @Description("Retrieve all bookings")
     @Test
+    @Description("Retrieve all bookings")
     public void testGetBookingIDs(){
         List<BookingIds> list = client.getBookings()
                 .checkStatusCode(HTTP_OK)
@@ -50,7 +49,6 @@ public class BookingTests extends BaseTest {
 
         Assert.assertNotNull(response);
     }
-
 
     @Test(dataProvider = "tokenProvider",dataProviderClass = BaseTest.class)
     @Description("Verify full booking update with authorization")
@@ -88,7 +86,7 @@ public class BookingTests extends BaseTest {
         int bookingId = createResponse.getBookingId();
 
         Booking updatedBooking = bookingData.createUpdatedBooking();
-        client.updateBooking(bookingId, "invalid_token", updatedBooking).checkStatusCode(403);
+        client.updateBooking(bookingId, INVALID_TOKEN, updatedBooking).checkStatusCode(HTTP_FORBIDDEN);
     }
 
     @Test(dataProvider = "tokenProvider",dataProviderClass = BaseTest.class)
@@ -103,17 +101,17 @@ public class BookingTests extends BaseTest {
         int bookingId = createResponse.getBookingId();
 
         Booking partialUpdate = new Booking();
-        partialUpdate.setFirstName("Jane");
-        partialUpdate.setTotalPrice(HTTP_OK);
-        client.partialUpdateBooking(bookingId, token, partialUpdate).checkStatusCode(200);
+        partialUpdate.setFirstName(FIRST_NAME_JANE);
+        partialUpdate.setTotalPrice(TOTAL_PRICE);
+        client.partialUpdateBooking(bookingId, token, partialUpdate).checkStatusCode(HTTP_OK);
 
         Booking getResponse = client.getBookingById(bookingId)
                 .checkStatusCode(HTTP_OK)
                 .asObject();
 
-        Assert.assertEquals(getResponse.getFirstName(), "Jane", "Имя не обновилось");
-        Assert.assertEquals(getResponse.getTotalPrice(), 200, "Цена не обновилась");
-        Assert.assertEquals(getResponse.getLastName(), initialBooking.getLastName(), "Фамилия должна остаться без изменений");
+        Assert.assertEquals(getResponse.getFirstName(), FIRST_NAME_JANE, "First name was not changed");
+        Assert.assertEquals(getResponse.getTotalPrice(), TOTAL_PRICE, "Total price was not updated");
+        Assert.assertEquals(getResponse.getLastName(), initialBooking.getLastName(), "Last name should not be changed");
     }
 
     @Test
@@ -128,9 +126,9 @@ public class BookingTests extends BaseTest {
         int bookingId = createResponse.getBookingId();
 
         Booking partialUpdate = new Booking();
-        partialUpdate.setFirstName("Jane");
+        partialUpdate.setFirstName(FIRST_NAME_JANE);
 
-        client.partialUpdateBooking(bookingId, "invalid_token", partialUpdate)
+        client.partialUpdateBooking(bookingId, INVALID_TOKEN, partialUpdate)
                 .checkStatusCode(HTTP_FORBIDDEN);
     }
 
@@ -156,11 +154,11 @@ public class BookingTests extends BaseTest {
         Booking initialBooking = bookingData.createInitialBooking();
 
         CreatedBookingResponse createResponse = client.createBooking(initialBooking)
-                .checkStatusCode(200)
+                .checkStatusCode(HTTP_OK)
                 .asObject();
 
         int bookingId = createResponse.getBookingId();
 
-        client.deleteBooking(bookingId, "invalid_token").checkStatusCode(HTTP_FORBIDDEN);
+        client.deleteBooking(bookingId, INVALID_TOKEN).checkStatusCode(HTTP_FORBIDDEN);
     }
 }

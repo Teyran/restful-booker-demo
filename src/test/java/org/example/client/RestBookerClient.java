@@ -1,7 +1,7 @@
 package org.example.client;
 
 import io.qameta.allure.Step;
-import io.qameta.allure.restassured.AllureRestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import org.example.config.AppConfigProvider;
 import org.example.models.*;
@@ -15,7 +15,7 @@ public class RestBookerClient {
 
     static {
         RestAssured.baseURI = AppConfigProvider.config.baseUrl();
-        RestAssured.filters(CustomAllureListener.withCustomTemplates(), new ResponseLoggingFilter());
+        RestAssured.filters(CustomAllureListener.withCustomTemplates(), new RequestLoggingFilter(), new ResponseLoggingFilter());
     }
 
     @Step("Create auth token with username: {request.username}")

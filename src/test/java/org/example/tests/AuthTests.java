@@ -9,11 +9,12 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static java.net.HttpURLConnection.HTTP_OK;
+import static org.example.data.BookingConstants.AUTH_BAD_CREDENTIALS_REASON;
 
 public class AuthTests extends BaseTest {
 
     @Test
-    @Description("Проверка создания токена с валидными credentials")
+    @Description("Verify token creation using valid credentials")
     public void testCreateTokenValid() {
         AuthRequest authRequest = new AuthRequest(AppConfigProvider.config.username(), AppConfigProvider.config.password());
 
@@ -25,14 +26,14 @@ public class AuthTests extends BaseTest {
     }
 
     @Test
-    @Description("Проверка создания токена с невалидными credentials")
+    @Description("Verify token creation using invalid credentials - returns 'Bad credentials'")
     public void testCreateTokenInvalid() {
-        AuthRequest authRequest = new AuthRequest("invalid", "creds");
+        AuthRequest authRequest = bookingData.createInvalidAuthRequest();
 
         TokenResponse token = client.createToken(authRequest)
                 .checkStatusCode(HTTP_OK)
                 .asObject();
 
-        Assert.assertEquals(token.getReason(), "Bad credentials");
+        Assert.assertEquals(token.getReason(), AUTH_BAD_CREDENTIALS_REASON);
     }
 }
