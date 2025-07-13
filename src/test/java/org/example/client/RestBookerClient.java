@@ -7,6 +7,7 @@ import org.example.config.AppConfigProvider;
 import org.example.models.*;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.example.utils.CustomAllureListener;
 
 import static io.restassured.RestAssured.given;
 
@@ -14,7 +15,7 @@ public class RestBookerClient {
 
     static {
         RestAssured.baseURI = AppConfigProvider.config.baseUrl();
-        RestAssured.filters(new AllureRestAssured(), new ResponseLoggingFilter());
+        RestAssured.filters(CustomAllureListener.withCustomTemplates(), new ResponseLoggingFilter());
     }
 
     @Step("Create auth token with username: {request.username}")

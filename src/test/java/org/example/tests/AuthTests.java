@@ -8,6 +8,8 @@ import org.example.models.TokenResponse;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static java.net.HttpURLConnection.HTTP_OK;
+
 public class AuthTests extends BaseTest {
 
     @Test
@@ -16,7 +18,7 @@ public class AuthTests extends BaseTest {
         AuthRequest authRequest = new AuthRequest(AppConfigProvider.config.username(), AppConfigProvider.config.password());
 
         TokenResponse token = client.createToken(authRequest)
-                .checkStatusCode(200)
+                .checkStatusCode(HTTP_OK)
                 .asObject();
 
         Assert.assertNotNull(token);
@@ -28,7 +30,7 @@ public class AuthTests extends BaseTest {
         AuthRequest authRequest = new AuthRequest("invalid", "creds");
 
         TokenResponse token = client.createToken(authRequest)
-                .checkStatusCode(200)
+                .checkStatusCode(HTTP_OK)
                 .asObject();
 
         Assert.assertEquals(token.getReason(), "Bad credentials");

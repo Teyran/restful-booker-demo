@@ -8,6 +8,8 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
+import static java.net.HttpURLConnection.*;
+
 public class BookingTests extends BaseTest {
     private final BookingData bookingData = new BookingData();
 
@@ -17,7 +19,7 @@ public class BookingTests extends BaseTest {
         Booking body = bookingData.createRandomBooking();
 
         CreatedBookingResponse response = client.createBooking(body)
-                .checkStatusCode(200)
+                .checkStatusCode(HTTP_OK)
                 .asObject();
 
         Assert.assertNotNull(response.getBookingId());
@@ -28,7 +30,7 @@ public class BookingTests extends BaseTest {
     @Test
     public void testGetBookingIDs(){
         List<BookingIds> list = client.getBookings()
-                .checkStatusCode(200)
+                .checkStatusCode(HTTP_OK)
                 .asList();
 
         Assert.assertNotNull(list);
@@ -38,13 +40,13 @@ public class BookingTests extends BaseTest {
     @Description("Retrieve a booking by ID")
     public void testGetBookingById(){
         List<BookingIds> list = client.getBookings()
-                .checkStatusCode(200)
+                .checkStatusCode(HTTP_OK)
                 .asList();
 
         int randomId = list.get(0).getBookingId();
 
         Booking response = client.getBookingById(randomId)
-                .checkStatusCode(200).asObject();
+                .checkStatusCode(HTTP_OK).asObject();
 
         Assert.assertNotNull(response);
     }
@@ -56,7 +58,7 @@ public class BookingTests extends BaseTest {
         Booking initialBooking = bookingData.createInitialBooking();
 
         CreatedBookingResponse createResponse = client.createBooking(initialBooking)
-                .checkStatusCode(200)
+                .checkStatusCode(HTTP_OK)
                 .asObject();
 
         int bookingId = createResponse.getBookingId();
@@ -64,10 +66,10 @@ public class BookingTests extends BaseTest {
         Booking updatedBooking = bookingData.createUpdatedBooking();
 
         client.updateBooking(bookingId, token, updatedBooking)
-                .checkStatusCode(200);
+                .checkStatusCode(HTTP_OK);
 
         Booking getResponse = client.getBookingById(bookingId)
-                .checkStatusCode(200)
+                .checkStatusCode(HTTP_OK)
                 .asObject();
 
         Assert.assertEquals(getResponse.getFirstName(), updatedBooking.getFirstName(), "Имя не обновилось");
@@ -80,7 +82,7 @@ public class BookingTests extends BaseTest {
         Booking initialBooking = bookingData.createInitialBooking();
 
         CreatedBookingResponse createResponse = client.createBooking(initialBooking)
-                .checkStatusCode(200)
+                .checkStatusCode(HTTP_OK)
                 .asObject();
 
         int bookingId = createResponse.getBookingId();
@@ -95,18 +97,18 @@ public class BookingTests extends BaseTest {
         Booking initialBooking = bookingData.createInitialBooking();
 
         CreatedBookingResponse createResponse = client.createBooking(initialBooking)
-                .checkStatusCode(200)
+                .checkStatusCode(HTTP_OK)
                 .asObject();
 
         int bookingId = createResponse.getBookingId();
 
         Booking partialUpdate = new Booking();
         partialUpdate.setFirstName("Jane");
-        partialUpdate.setTotalPrice(200);
+        partialUpdate.setTotalPrice(HTTP_OK);
         client.partialUpdateBooking(bookingId, token, partialUpdate).checkStatusCode(200);
 
         Booking getResponse = client.getBookingById(bookingId)
-                .checkStatusCode(200)
+                .checkStatusCode(HTTP_OK)
                 .asObject();
 
         Assert.assertEquals(getResponse.getFirstName(), "Jane", "Имя не обновилось");
@@ -120,7 +122,7 @@ public class BookingTests extends BaseTest {
         Booking initialBooking = bookingData.createInitialBooking();
 
         CreatedBookingResponse createResponse = client.createBooking(initialBooking)
-                .checkStatusCode(200)
+                .checkStatusCode(HTTP_OK)
                 .asObject();
 
         int bookingId = createResponse.getBookingId();
@@ -129,7 +131,7 @@ public class BookingTests extends BaseTest {
         partialUpdate.setFirstName("Jane");
 
         client.partialUpdateBooking(bookingId, "invalid_token", partialUpdate)
-                .checkStatusCode(403);
+                .checkStatusCode(HTTP_FORBIDDEN);
     }
 
     @Test(dataProvider = "tokenProvider",dataProviderClass = BaseTest.class)
@@ -138,14 +140,14 @@ public class BookingTests extends BaseTest {
         Booking initialBooking = bookingData.createInitialBooking();
 
         CreatedBookingResponse createResponse = client.createBooking(initialBooking)
-                .checkStatusCode(200)
+                .checkStatusCode(HTTP_OK)
                 .asObject();
 
         int bookingId = createResponse.getBookingId();
 
-        client.deleteBooking(bookingId, token).checkStatusCode(201);
+        client.deleteBooking(bookingId, token).checkStatusCode(HTTP_CREATED); //incorrect status code
 
-        client.getBookingById(bookingId).checkStatusCode(404);
+        client.getBookingById(bookingId).checkStatusCode(HTTP_NOT_FOUND);
     }
 
     @Test
@@ -159,6 +161,6 @@ public class BookingTests extends BaseTest {
 
         int bookingId = createResponse.getBookingId();
 
-        client.deleteBooking(bookingId, "invalid_token").checkStatusCode(403);
+        client.deleteBooking(bookingId, "invalid_token").checkStatusCode(HTTP_FORBIDDEN);
     }
 }
