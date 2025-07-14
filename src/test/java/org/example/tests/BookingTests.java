@@ -107,7 +107,7 @@ public class BookingTests extends BaseTest {
         Booking initialBooking = bookingData.createInitialBooking();
         int bookingId  = client.createBooking(initialBooking).asObjectWithStatus(HTTP_OK).getBookingId();
 
-        client.deleteBooking(bookingId, token).checkStatusCode(HTTP_OK);
+        client.deleteBooking(bookingId, token).checkStatusCode(HTTP_NO_CONTENT);
         client.getBookingById(bookingId).checkStatusCode(HTTP_NOT_FOUND);
     }
 
