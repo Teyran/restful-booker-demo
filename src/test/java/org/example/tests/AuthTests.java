@@ -4,7 +4,6 @@ import io.qameta.allure.Description;
 
 import org.example.config.AppConfigProvider;
 import org.example.models.AuthRequest;
-import org.example.models.TokenResponse;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -13,27 +12,23 @@ import static org.example.data.BookingConstants.AUTH_BAD_CREDENTIALS_REASON;
 
 public class AuthTests extends BaseTest {
 
-    @Test
+    @Test(groups = {"smoke"})
     @Description("Verify token creation using valid credentials")
     public void testCreateTokenValid() {
         AuthRequest authRequest = new AuthRequest(AppConfigProvider.config.username(), AppConfigProvider.config.password());
 
-        TokenResponse token = client.createToken(authRequest)
-                .checkStatusCode(HTTP_OK)
-                .asObject();
+        String token = client.createToken(authRequest).checkStatusCode(HTTP_OK).asObject().getToken();
 
         Assert.assertNotNull(token);
     }
 
-    @Test
+    @Test(groups = {"regression"})
     @Description("Verify token creation using invalid credentials - returns 'Bad credentials'")
     public void testCreateTokenInvalid() {
         AuthRequest authRequest = bookingData.createInvalidAuthRequest();
 
-        TokenResponse token = client.createToken(authRequest)
-                .checkStatusCode(HTTP_OK)
-                .asObject();
+        String reason  = client.createToken(authRequest).checkStatusCode(HTTP_OK).asObject().getReason();
 
-        Assert.assertEquals(token.getReason(), AUTH_BAD_CREDENTIALS_REASON);
+        Assert.assertEquals(reason, AUTH_BAD_CREDENTIALS_REASON);
     }
 }

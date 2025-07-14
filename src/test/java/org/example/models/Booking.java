@@ -1,6 +1,5 @@
 package org.example.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -24,7 +23,7 @@ public class Booking {
     private int totalPrice;
 
     @JsonProperty("depositpaid")
-    private boolean depositPaid;
+    private Boolean depositPaid;
 
     @JsonProperty("bookingdates")
     private BookingDates bookingDates;

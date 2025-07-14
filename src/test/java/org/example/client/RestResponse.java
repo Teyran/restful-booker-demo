@@ -1,6 +1,6 @@
 package org.example.client;
 
-import io.restassured.response.Response;
+
 import io.restassured.response.ValidatableResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -16,16 +16,12 @@ public class RestResponse<T> {
         return response.extract().as(clazz);
     }
 
+    public T asObjectWithStatus(int statusCode) {
+        return checkStatusCode(statusCode).asObject();
+    }
+
     public List<T> asList(){
         return response.extract().jsonPath().getList("", clazz);
-    }
-
-    public String asString() {
-        return response.extract().asPrettyString();
-    }
-
-    public Response asResponse() {
-        return response.extract().response();
     }
 
     public RestResponse<T> checkStatusCode(int status) {
