@@ -144,8 +144,39 @@ You can also view test attachments showing request and response data.
 
 <img src="images/allure-test-case.png" alt="Allure Report suites">
 
-
 [Back to content ⬆](#contents)
+
+
+## ✨ Enhanced Allure Reports with `CustomAllureListener` and `.ftl` Filters
+
+Our framework integrates a custom `AllureRestAssured` listener (`CustomAllureListener`) enhanced with FreeMarker (`.ftl`) templates, enabling the generation of clear and readable request/response logs in Allure reports.
+
+### ✅ Key Benefits
+
+- **Readable and Structured Output**  
+  No more raw JSON dumps. With `.ftl` filters, request and response bodies are beautifully formatted and color-coded in Allure UI.
+
+- **Improved Debugging**  
+  Helps quickly spot incorrect payloads, missing fields, or invalid responses.
+
+- **Easy Collaboration**  
+  Clean reports make it easier for developers, testers, and product owners to understand what's going on.
+
+- **cURL Command Generation**  
+  Automatically generates equivalent curl requests right in the report for quick manual debugging or reproduction.
+
+- **Header and Body Separation**  
+  Request headers, body, and responses are split into distinct, easy-to-read sections.
+
+<img src="images/allure-request-response-log.png" alt="Allure Request/Response logs">
+  
+### 🧩 Where It’s Applied
+
+This feature is automatically enabled via:
+
+```string
+RestAssured.filters(CustomAllureListener.withCustomTemplates(), new RequestLoggingFilter(), new ResponseLoggingFilter());
+```
 
 ## <img width="3%" title="Telegram" src="images/icons/telegram.svg"> Telegram Notifications
  
